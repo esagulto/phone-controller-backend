@@ -1,0 +1,23 @@
+{
+  "name": "screen_controller",
+  "version": "1.0.0",
+  "description": "Backend for a computer screen controller",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "screen",
+    "control"
+  ],
+  "author": "Edzel Agulto",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "robotjs": "^0.6.0"
+  },
+  "devDependencies": {
+    "node-gyp": "^8.4.1",
+    "nodemon": "^2.0.15"
+  }
+}
