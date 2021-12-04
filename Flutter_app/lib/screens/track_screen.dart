@@ -22,17 +22,60 @@ class _TrackpadState extends State<Trackpad> {
           commandTransfer.connect();
         },
       ),
-      body: Container(
-        color: Colors.red,
-        child: GestureDetector(
-          onPanUpdate: (value) {
-            commandTransfer.sendTrackMovement(value.delta);
-          },
-          onPanEnd: (value) {
-            commandTransfer.sendPanEnd();
-          },
+      body: Column(children: <Widget>[
+        Expanded(
+          flex: 5,
+          child: Container(
+            color: Colors.white,
+            child: GestureDetector(
+              onPanUpdate: (value) {
+                commandTransfer.sendTrackMovement(value.delta);
+              },
+              onPanEnd: (value) {
+                commandTransfer.sendPanEnd();
+              },
+            ),
+          ),
         ),
-      ),
+        Expanded(
+          flex: 1,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  color: Colors.blue,
+                  child: GestureDetector(
+                    onTap: () {
+                      commandTransfer.sendClickCommand('LMB');
+                    },
+                    child: const Center(
+                        child: Text(
+                      'LMB',
+                      style: TextStyle(color: Colors.white),
+                    )),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.blue,
+                  child: GestureDetector(
+                    onTap: () {
+                      commandTransfer.sendClickCommand('RMB');
+                    },
+                    child: const Center(
+                        child: Text(
+                      'RMB',
+                      style: TextStyle(color: Colors.white),
+                    )),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ]),
     );
   }
 }

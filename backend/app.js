@@ -33,12 +33,23 @@ io.on('connection', (socket)=>{
         robot.moveMouse(x_position,y_position);
     })
 
+    socket.on('Click', button =>{
+        console.log(button);
+        if (button == 'LMB'){
+            robot.mouseClick();
+        } else {
+            robot.mouseToggle();
+        }
+    });
+
     socket.on('disconnect', ()=>{
         console.log('the user disconnected');
         x_position = 0;
         y_position = 0;
 
     });
+
+
 });
 
 

@@ -24,6 +24,10 @@ class CommandTransfer {
     socket.emit('onPanDown', initialPosition);
   }
 
+  void sendClickCommand(String mouseButton) {
+    socket.emit('Click', mouseButton);
+  }
+
   void sendPanEnd() {
     socket.emit('onPanEnd', 'hands up');
   }
