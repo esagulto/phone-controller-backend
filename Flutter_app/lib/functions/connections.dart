@@ -9,10 +9,34 @@ io.Socket socket = io.io('http://192.168.1.13:3000', <String, dynamic>{
 });
 
 class CommandTransfer {
+  bool isUserConnected = false;
+
+  void changeUserState() {
+    isUserConnected = !isUserConnected;
+    print('state Change: $isUserConnected');
+  }
+
   void connect() {
     print('hello');
     socket.connect();
-    socket.emit('msg', 'hi');
+    socket.on(
+        'server response',
+        (response) => {
+              print(response),
+              changeUserState(),
+              print('is user connected? : $isUserConnected')
+            });
+  }
+
+  bool isConnected() {
+    return socket.connected;
+  }
+
+  void disconnect() {
+    socket.disconnect();
+    print('disconnect');
+    changeUserState();
+    print(isUserConnected);
   }
 
   void sendTrackMovement(Offset movement) {

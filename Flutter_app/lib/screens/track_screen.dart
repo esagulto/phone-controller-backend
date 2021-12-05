@@ -11,16 +11,37 @@ class Trackpad extends StatefulWidget {
 }
 
 class _TrackpadState extends State<Trackpad> {
+  bool switchVal = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Remote Mouse Controller'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          commandTransfer.connect();
-        },
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text('Remote Cursor Controller'),
+            Switch(
+                value: switchVal,
+                onChanged: (value) {
+                  setState(() {
+                    switchVal = value;
+                  });
+                  if (value) {
+                    commandTransfer.connect();
+                    if (commandTransfer.isUserConnected == true) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('user now connected')));
+                    }
+                  } else {
+                    commandTransfer.disconnect();
+                    if (commandTransfer.isUserConnected == false) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('user now disconnected')));
+                    }
+                  }
+                })
+          ],
+        ),
       ),
       body: Column(children: <Widget>[
         Expanded(
@@ -29,10 +50,16 @@ class _TrackpadState extends State<Trackpad> {
             color: Colors.white,
             child: GestureDetector(
               onPanUpdate: (value) {
-                commandTransfer.sendTrackMovement(value.delta);
+                if (commandTransfer.isConnected() == true) {
+                  commandTransfer.sendTrackMovement(value.delta);
+                } else {
+                  print('not connected');
+                }
               },
               onPanEnd: (value) {
-                commandTransfer.sendPanEnd();
+                if (commandTransfer.isConnected() == true) {
+                  commandTransfer.sendPanEnd();
+                }
               },
             ),
           ),

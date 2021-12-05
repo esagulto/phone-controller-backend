@@ -14,6 +14,7 @@ app.get('/', (req, res)=>{
 io.on('connection', (socket)=>{
     console.log(' a user connected');
     console.log(socket.id);
+    socket.emit('server response', 'User now connected');
 
     socket.on('msg', data=>{
         console.log(data);
