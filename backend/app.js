@@ -16,30 +16,27 @@ io.on('connection', (socket)=>{
     console.log(socket.id);
     socket.emit('server response', 'User now connected');
 
-    socket.on('msg', data=>{
-        console.log(data);
-    });
-
     socket.on('onPanDown', command =>{
         var commandJSON = JSON.parse(command);
         x_position = x_position + commandJSON.x;
         y_position = y_position + commandJSON.y;      
-        console.log('x', x_position);
-        console.log('y', y_position);
         robot.dragMouse(x_position, y_position);
     });
 
-    socket.on('onPanEnd', (data)=>{
+    socket.on('typedMessage', data=>{
         console.log(data);
+        robot.typeString(data);
+    })
+
+    socket.on('onPanEnd', (data)=>{
         robot.moveMouse(x_position,y_position);
     })
 
     socket.on('Click', button =>{
-        console.log(button);
         if (button == 'LMB'){
-            robot.mouseClick();
+            robot.mouseClick("left");
         } else {
-            robot.mouseToggle();
+            robot.mouseClick("right");
         }
     });
 

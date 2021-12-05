@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/functions/connections.dart';
+import 'package:flutter_app/widgets/text_widget.dart';
 
 CommandTransfer commandTransfer = CommandTransfer();
 
@@ -44,6 +45,9 @@ class _TrackpadState extends State<Trackpad> {
         ),
       ),
       body: Column(children: <Widget>[
+        Expanded(
+          child: CustomTextEditor(),
+        ),
         Expanded(
           flex: 5,
           child: Container(

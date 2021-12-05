@@ -55,4 +55,9 @@ class CommandTransfer {
   void sendPanEnd() {
     socket.emit('onPanEnd', 'hands up');
   }
+
+  void sendMessage(String msg) {
+    print('this is the message: $msg');
+    socket.emit('typedMessage', msg);
+  }
 }
